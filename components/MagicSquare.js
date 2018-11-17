@@ -7,34 +7,48 @@ import { DominoRow } from './DominoRow';
 export class MagicSquare extends React.Component {
   constructor(props) {
     super(props)
-    let { width, height } = Dimensions.get('window')
-    this.state = { width, height };
+    let { width, height } = this.props;
     this.styles = StyleSheet.create({
       domino: {
-        width: (this.state.width / 2)
+        width: (width / 2)
       },
       equals: {
-        width: (this.state.width / 4)
+        width: (width / 4)
       },
       answer: {
-        width: (this.state.width / 4)
+        width: (width / 4)
       },
       row: {
-        height: this.state.width / 4
+        height: width / 4
       },
     });
   }
+
+
+  screenWidth = () => this.props.width;
+  headerHeight = () => 100;
+  rowHeight = () => ((this.props.height - this.headerHeight()) / 3);
+  controlHeight = () => (this.props.height - 25);
+
   render() {
-    return <View style={{ flex: 1, flexDirection: 'column' }}>
+    return <View style={{ flex: 1, flexDirection: 'column', height: this.controlHeight() }}>
       <Text style={{
         fontSize: 50,
-        height: this.styles.row.height * .90,
+        height: this.headerHeight(),
         textAlign: 'center',
         justifyContent: 'center',
       }}>Magic Dominos</Text>
-      <DominoRow leftValue={1} rightValue={4} width={this.state.width} />
-      <DominoRow leftValue={6} rightValue={3} width={this.state.width} />
-      <AnswerRow width={this.state.width} />
+      <DominoRow
+        leftValue={1}
+        rightValue={4}
+        width={this.screenWidth()}
+        height={this.rowHeight()} />
+      <DominoRow
+        leftValue={6}
+        rightValue={3}
+        width={this.screenWidth()}
+        height={this.rowHeight()} />
+      <AnswerRow width={this.props.width} height={this.rowHeight()} />
     </View>
       ;
   }

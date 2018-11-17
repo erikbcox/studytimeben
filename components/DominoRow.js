@@ -21,23 +21,63 @@ export class DominoRow extends React.Component {
       },
     });
   }
+
+  screenWidth = () => this.props.width;
+  rowMargin = () => 15;
+  rowWidth = () => this.screenWidth() - (this.rowMargin() * 2);
+  dominoWidth = () => this.rowWidth() * .60;
+  answerWidth = () => this.rowWidth() * .30;
+  equalsWidth = () => this.rowWidth() * .10;
+
+  rowHeight = () => this.props.height * .90;
+  dominoHeight = () => this.rowHeight() * .90;
+  answerHeight = () => this.rowHeight() * .90;
+  equalsHeight = () => this.rowHeight() * .90;
+
   render() {
-    return <View style={{ height: 100, marginLeft: 3, marginRight: 3 }}>
-      <View style={{ flexDirection: 'row', height: this.styles.row.height }}>
-        <Domino width={this.styles.domino.width} 
-                height={this.styles.row.height} 
-                style={{ width: this.styles.domino.width, height: this.styles.row.height }} 
-                leftValue={this.props.leftValue} rightValue={this.props.rightValue} />
-        <Text style={{ width: '10%', height: this.styles.row.height, fontSize: 60, justifyContent: 'center', }}>=</Text>
-        <View style={{ width: this.styles.answer.width, borderColor: '#A9A9A9', borderWidth: 2, }} >
-        <TextInput style={{
-            backgroundColor: 'khaki',
+    return <View style={{
+      flexDirection: 'row',
+      height: this.rowHeight(),
+      width: this.rowWidth(),
+      justifyContent: 'space-between',
+      marginLeft: this.rowMargin(),
+      marginRight: this.rowMargin(),
+      marginBottom: 15
+    }}>
+      <Domino width={this.dominoWidth()}
+        height={this.dominoHeight()}
+        style={{
+          width: this.dominoWidth(),
+          height: this.dominoHeight()
+        }}
+        leftValue={this.props.leftValue}
+        rightValue={this.props.rightValue} />
+      <View style={{
+        width: this.equalsWidth(),
+        height: this.equalsHeight(),
+        textAlign: 'center',
+        justifyContent: 'center',
+      }}>
+        <Text style={{
+          fontSize: 60,
+          textAlign: 'center',
+        }}>=</Text>
+      </View>
+      <View style={{
+        width: this.answerWidth(),
+        borderColor: '#A9A9A9',
+        borderWidth: 2,
+      }} >
+        <TextInput
+          keyboardType='numeric'
+          placeholder="?"
+          maxLength={2}
+          style={{
             textAlign: 'center',
-            height: this.styles.answer.width,
-            fontSize: 60, padding: 5,
-          }}
-            keyboardType='numeric' placeholder="?" maxLength={2}></TextInput>
-        </View>
+            height: this.answerHeight(),
+            fontSize: 60,
+            padding: 5,
+          }}></TextInput>
       </View>
     </View>
   }

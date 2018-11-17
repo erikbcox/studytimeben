@@ -3,6 +3,7 @@ import { Dimensions, ScrollView, StyleSheet, Text } from 'react-native';
 import { Layouter } from '../components/Layouter';
 import { Dims } from '../components/Dims';
 import { Device } from '../components/Device';
+import { MagicSquare } from '../components/MagicSquare';
 
 export default class MathScreen extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export default class MathScreen extends React.Component {
     let { width, height } = Dimensions.get('window')
     this.state = { width, height };
     Dimensions.addEventListener('change', () => {
-      let { width, height } =Dimensions.get('window')
+      let { width, height } = Dimensions.get('window')
       this.setState({
         width: width,
         height: height,
@@ -24,6 +25,7 @@ export default class MathScreen extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
+        <MagicSquare width={this.state.width} height={this.state.height} />
         <Dims width={this.state.width} height={this.state.height} />
       </ScrollView>
     );
