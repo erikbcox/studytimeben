@@ -6,19 +6,31 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View, Dimensions } from 'react-native';
+import Device from './components/Device';
 import MathScreen from './screens/MathScreen';
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
 type Props = {};
 export default class App extends Component<Props> {
+  constructor() {
+    super();
+    this.state = {
+      orientation: Device.isPortrait() ? 'portrait' : 'landscape',
+      devicetype: Device.isTablet() ? 'tablet' : 'phone',
+      width: Device.width(),
+      height: Device.height()
+    };
+    Dimensions.addEventListener('change', () => {
+      this.setState({
+        orientation: Device.isPortrait() ? 'portrait' : 'landscape',
+        width: Device.width(),
+        height: Device.height(),
+      });
+    });
+
+  }
+
   render() {
     return (
       <View style={styles.container}>
